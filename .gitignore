@@ -1,0 +1,46 @@
+    # Logs
+    logs
+    *.log
+    npm-debug.log*
+    yarn-debug.log*
+    yarn-error.log*
+    pnpm-debug.log*
+    lerna-debug.log*
+
+    # Diagnostic reports (https://nodejs.org/api/report.html)
+    .report/
+
+    # Node.js
+    # /node_modules
+    # /dist
+    # /build
+    # /coverage
+
+    node_modules/
+    dist/
+    build/
+    .vite/
+    .vscode/
+    coverage/
+
+    # Editor directories and files
+    .idea
+    .vs
+    .DS_Store
+    *.suo
+    *.ntvsps
+    *.njsproj
+    *.sln
+    *.bak
+    *.pyc
+    *.log
+    .env
+    .env.local
+    .env.*.local
+    .firebase/
+    firebase-debug.log
+    firebase-debug.log.json
+
+    # Specific to Vite
+    # vite.config.ts.timestamp-*
+
