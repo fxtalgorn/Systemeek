@@ -11,6 +11,7 @@ const ThreeDCanvas: React.FC<ThreeDCanvasProps> = ({ graph }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number | null>(null);
   
+  // Animation state refs
   const isAnimatingRef = useRef(false);
   const targetPositionRef = useRef<THREE.Vector3 | null>(null);
   const targetLookAtRef = useRef<THREE.Vector3 | null>(null);
@@ -25,6 +26,7 @@ const ThreeDCanvas: React.FC<ThreeDCanvasProps> = ({ graph }) => {
   const geometriesToDispose = useRef<THREE.BufferGeometry[]>([]);
   const materialsToDispose = useRef<THREE.Material[]>([]);
 
+  // Main setup effect
   useEffect(() => {
     if (!mountRef.current) return;
 
@@ -60,32 +62,62 @@ const ThreeDCanvas: React.FC<ThreeDCanvasProps> = ({ graph }) => {
     };
 
     const handleDoubleClick = (event: MouseEvent) => {
-      if (!cameraRef.current || !sceneRef.current || !mountRef.current) return;
+        if (!cameraRef.current || !sceneRef.current || !mountRef.current) return;
 
-      const mouse = new THREE.Vector2();
-      const rect = mountRef.current.getBoundingClientRect();
-      mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        const mouse = new THREE.Vector2();
+        const rect = mountRef.current.getBoundingClientRect();
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
-      const raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera(mouse, cameraRef.current);
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(mouse, cameraRef.current);
 
-      const intersects = raycaster.intersectObjects(nodeMeshesRef.current);
+        const intersects = raycaster.intersectObjects(nodeMeshesRef.current);
 
-      if (intersects.length > 0) {
-        const targetObject = intersects[0].object;
-        const targetPosition = targetObject.position.clone();
-        
-        if (controlsRef.current) {
-          controlsRef.current.enabled = false;
+        if (intersects.length > 0) {
+            const targetObject = intersects[0].object;
+            const cubePosition = targetObject.position.clone();
+
+            // The camera will always look at the center of the clicked cube.
+            targetLookAtRef.current = cubePosition;
+
+            // --- New Logic based on user constraints ---
+
+            // 1. Define constraints
+            const angleAbovePlane = 15; // degrees
+            const retreatDistance = 10; // units to pull back from the circle of cubes
+
+            // 2. Determine the cube's plane and circle.
+            const horizontalVector = new THREE.Vector3(cubePosition.x, 0, cubePosition.z);
+            const circleRadius = horizontalVector.length();
+            const direction = horizontalVector.normalize();
+
+            // 3. Calculate horizontal position: "en retrait du cercle"
+            const totalHorizontalDistance = circleRadius + retreatDistance;
+            const cameraHorizontalPosition = direction.multiplyScalar(totalHorizontalDistance);
+
+            // 4. Calculate vertical position: "15° au-dessus du plan"
+            // tan(angle) = opposite / adjacent. 'opposite' is vertical offset, 'adjacent' is horizontal distance.
+            const verticalOffset = totalHorizontalDistance * Math.tan(THREE.MathUtils.degToRad(angleAbovePlane));
+            // Since "up" is negative Y in this scene, we subtract the offset.
+            const cameraY = cubePosition.y - verticalOffset;
+
+            // 5. Assemble the final camera position.
+            const finalCameraPosition = new THREE.Vector3(
+                cameraHorizontalPosition.x,
+                cameraY,
+                cameraHorizontalPosition.z
+            );
+            
+            targetPositionRef.current = finalCameraPosition;
+
+            // --- End of New Logic ---
+
+            if (controlsRef.current) {
+                controlsRef.current.enabled = false;
+            }
+            isAnimatingRef.current = true;
         }
-
-        isAnimatingRef.current = true;
-        targetLookAtRef.current = targetPosition;
-        
-        const offset = cameraRef.current.position.clone().sub(targetPosition).normalize().multiplyScalar(10);
-        targetPositionRef.current = targetPosition.clone().add(offset);
-      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -128,8 +160,10 @@ const ThreeDCanvas: React.FC<ThreeDCanvasProps> = ({ graph }) => {
     };
   }, []);
 
+  // Effect to build the graph
   useEffect(() => {
     if (graph && sceneRef.current) {
+      // Clear previous graph
       nodeMeshesRef.current.forEach(mesh => sceneRef.current?.remove(mesh));
       edgeLinesRef.current.forEach(line => sceneRef.current?.remove(line));
       geometriesToDispose.current.forEach(g => g.dispose());
