@@ -1,27 +1,18 @@
-    // src/components/LeftMenu.tsx
-    import React from 'react';
+import React from 'react';
+import Importer from './Importer';
+import type { Graph } from './Importer';
 
-    interface LeftMenuProps {
-      onSpeedChange: (speed: number) => void;
-      currentSpeed: number;
-    }
+interface LeftMenuProps {
+  onGraphLoad: (graph: Graph) => void; // Add onGraphLoad prop
+}
 
-    const LeftMenu: React.FC<LeftMenuProps> = ({ onSpeedChange, currentSpeed }) => {
-      return (
-        <div className="left-menu">
-          <h2>Contrôles 3D</h2>
-          <label htmlFor="rotationSpeed">Vitesse de rotation (tr/min):</label>
-          <input
-            type="range"
-            id="rotationSpeed"
-            min="0"
-            max="100"
-            value={currentSpeed}
-            onChange={(e) => onSpeedChange(Number(e.target.value))}
-          />
-          <p>Vitesse actuelle: {currentSpeed} tr/min</p>
-        </div>
-      );
-    };
+const LeftMenu: React.FC<LeftMenuProps> = ({ onGraphLoad }) => {
+  return (
+    <div className="left-menu">
+      <h2>Contrôles 3D</h2>
+      <Importer onGraphLoad={onGraphLoad} />
+    </div>
+  );
+};
 
-    export default LeftMenu;
+export default LeftMenu;

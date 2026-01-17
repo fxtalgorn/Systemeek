@@ -1,0 +1,247 @@
+{
+  "schemaVersion": "1.0.0",
+  "graph": {
+    "nodes": [
+      {
+        "id": "sphere-0",
+        "label": "Sphere",
+        "position": {
+          "x": 0,
+          "y": 10,
+          "z": 0
+        }
+      },
+      {
+        "id": "cube-0-0",
+        "label": "Cube 0-0",
+        "position": {
+          "x": 4,
+          "y": 0,
+          "z": 0
+        }
+      },
+      {
+        "id": "cube-0-1",
+        "label": "Cube 0-1",
+        "position": {
+          "x": -2,
+          "y": 0,
+          "z": 3.4641016151377544
+        }
+      },
+      {
+        "id": "cube-0-2",
+        "label": "Cube 0-2",
+        "position": {
+          "x": -2,
+          "y": 0,
+          "z": -3.4641016151377544
+        }
+      },
+      {
+        "id": "cube-1-0",
+        "label": "Cube 1-0",
+        "position": {
+          "x": 5,
+          "y": -10,
+          "z": 0
+        }
+      },
+      {
+        "id": "cube-2-0",
+        "label": "Cube 2-0",
+        "position": {
+          "x": 6,
+          "y": -20,
+          "z": 0
+        }
+      },
+      {
+        "id": "cube-2-1",
+        "label": "Cube 2-1",
+        "position": {
+          "x": -3,
+          "y": -20,
+          "z": 5.196152422706632
+        }
+      },
+      {
+        "id": "cube-2-2",
+        "label": "Cube 2-2",
+        "position": {
+          "x": -3,
+          "y": -20,
+          "z": -5.196152422706632
+        }
+      },
+      {
+        "id": "cube-3-0",
+        "label": "Cube 3-0",
+        "position": {
+          "x": 4.5,
+          "y": -30,
+          "z": 0
+        }
+      },
+      {
+        "id": "cube-3-1",
+        "label": "Cube 3-1",
+        "position": {
+          "x": -2.25,
+          "y": -30,
+          "z": 3.897114317029974
+        }
+      },
+      {
+        "id": "cube-3-2",
+        "label": "Cube 3-2",
+        "position": {
+          "x": -2.25,
+          "y": -30,
+          "z": -3.897114317029974
+        }
+      },
+      {
+        "id": "cube-4-0",
+        "label": "Cube 4-0",
+        "position": {
+          "x": 5.2,
+          "y": -40,
+          "z": 0
+        }
+      },
+      {
+        "id": "cube-4-1",
+        "label": "Cube 4-1",
+        "position": {
+          "x": -2.6,
+          "y": -40,
+          "z": 4.503332229983968
+        }
+      },
+      {
+        "id": "cube-4-2",
+        "label": "Cube 4-2",
+        "position": {
+          "x": -2.6,
+          "y": -40,
+          "z": -4.503332229983968
+        }
+      },
+      {
+        "id": "cube-5-0",
+        "label": "Cube 5-0",
+        "position": {
+          "x": 4.8,
+          "y": -50,
+          "z": 0
+        }
+      },
+      {
+        "id": "cube-5-1",
+        "label": "Cube 5-1",
+        "position": {
+          "x": -2.4,
+          "y": -50,
+          "z": 4.156921938165306
+        }
+      },
+      {
+        "id": "cube-5-2",
+        "label": "Cube 5-2",
+        "position": {
+          "x": -2.4,
+          "y": -50,
+          "z": -4.156921938165306
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge-0",
+        "source": "sphere-0",
+        "target": "cube-0-1"
+      },
+      {
+        "id": "edge-1",
+        "source": "cube-0-0",
+        "target": "cube-0-2"
+      },
+      {
+        "id": "edge-2",
+        "source": "cube-0-1",
+        "target": "cube-1-0"
+      },
+      {
+        "id": "edge-3",
+        "source": "cube-0-2",
+        "target": "cube-2-1"
+      },
+      {
+        "id": "edge-4",
+        "source": "cube-1-0",
+        "target": "cube-3-0"
+      },
+      {
+        "id": "edge-5",
+        "source": "cube-2-0",
+        "target": "cube-2-2"
+      },
+      {
+        "id": "edge-6",
+        "source": "cube-2-1",
+        "target": "cube-4-1"
+      },
+      {
+        "id": "edge-7",
+        "source": "cube-2-2",
+        "target": "cube-5-2"
+      },
+      {
+        "id": "edge-8",
+        "source": "cube-3-0",
+        "target": "cube-3-1"
+      },
+      {
+        "id": "edge-9",
+        "source": "cube-3-1",
+        "target": "cube-4-0"
+      },
+      {
+        "id": "edge-10",
+        "source": "cube-3-2",
+        "target": "cube-5-0"
+      },
+      {
+        "id": "edge-11",
+        "source": "cube-4-0",
+        "target": "cube-4-2"
+      },
+      {
+        "id": "edge-12",
+        "source": "cube-4-1",
+        "target": "cube-5-1"
+      },
+      {
+        "id": "edge-13",
+        "source": "cube-4-2",
+        "target": "cube-5-0"
+      },
+      {
+        "id": "edge-14",
+        "source": "cube-5-0",
+        "target": "sphere-0"
+      },
+      {
+        "id": "edge-15",
+        "source": "cube-5-1",
+        "target": "cube-0-0"
+      },
+      {
+        "id": "edge-16",
+        "source": "cube-5-2",
+        "target": "cube-2-0"
+      }
+    ]
+  }
+}

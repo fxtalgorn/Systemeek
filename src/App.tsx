@@ -1,24 +1,24 @@
-    // src/App.tsx
-    import { useState } from 'react';
-    import LeftMenu from './components/LeftMenu';
-    import ThreeDCanvas from './components/ThreeDCanvas';
-    import './index.css'; // Importez votre CSS global ici
+import { useState } from 'react';
+import type { Graph } from './components/Importer';
+import LeftMenu from './components/LeftMenu';
+import ThreeDCanvas from './components/ThreeDCanvas';
+import './index.css';
 
-    function App() {
-      const [cubeRotationSpeed, setCubeRotationSpeed] = useState<number>(0);
+function App() {
+  const [graph, setGraph] = useState<Graph | null>(null);
 
-      const handleSpeedChange = (speed: number) => {
-        setCubeRotationSpeed(speed);
-      };
+  const handleGraphLoad = (loadedGraph: Graph) => {
+    setGraph(loadedGraph);
+  };
 
-      return (
-        <div className="app-container">
-          <LeftMenu onSpeedChange={handleSpeedChange} currentSpeed={cubeRotationSpeed} />
-          <div className="right-canvas-container">
-            <ThreeDCanvas rotationSpeed={cubeRotationSpeed} />
-          </div>
-        </div>
-      );
-    }
+  return (
+    <div className="app-container">
+      <LeftMenu onGraphLoad={handleGraphLoad} />
+      <div className="right-canvas-container">
+        <ThreeDCanvas graph={graph} />
+      </div>
+    </div>
+  );
+}
 
-    export default App;
+export default App;
